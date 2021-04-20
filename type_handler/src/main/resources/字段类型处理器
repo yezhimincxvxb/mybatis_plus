@@ -1,0 +1,9 @@
+1. 实体类上加上
+@TableName(value = "user",autoResultMap = true)
+
+2. 具体实现
+MyDateTypeHandler.java
+
+3. 字段修改
+@TableField(value = "create_date_unix", typeHandler = MyDateTypeHandler.class)
+private LocalDateTime createDateUnix;

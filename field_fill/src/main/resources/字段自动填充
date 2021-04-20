@@ -1,0 +1,8 @@
+1.具体填充逻辑
+MyMetaObjectHandler.java
+
+2.填充字段 指定fill属性
+@TableField(value = "update_date", fill = FieldFill.INSERT_UPDATE)
+private LocalDateTime updateDate;
+@TableField(value = "create_date",fill = FieldFill.INSERT)
+private LocalDateTime createDate;

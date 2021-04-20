@@ -1,0 +1,18 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: mpw:KD6cCIsiOCpZKFciVXEjrMNltsTwvwytxLNk/X+zIvqunyZ7cwv8mwezvp0pKJ/0kWTA4qufpJJ41TCsKl6VS4sPAzeSrjCldAQtvg97u0FXNeFxvetsOnDJOzx/KxFeracbzpKk+PNrMOaqAglbeEDE4+6uqGPull+3iTISpb/FWQAEHqZWF/OTF2R84tMQ/7quJ7RCWqZ3JctmociEndyNApW6peWtuvZtXdY/KXQ9DPhbBk+NnlcQP6UbWyiW
+    username: mpw:2by98mD+a42CcDI4ADFY0A==
+    password: mpw:YBpc8qKII2CBDJIsYE82jw==
+
+mybatis-plus:
+  mapper-locations: classpath:/mapper/*Mapper.xml
+  type-aliases-package: com.yzm.safety_protection.entity
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+    map-underscore-to-camel-case: true
+  global-config:
+    db-config:
+      logic-delete-value: 1 # 逻辑已删除值(默认为 1)
+      logic-not-delete-value: 0 # 逻辑未删除值(默认为 0)
+

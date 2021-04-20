@@ -1,0 +1,9 @@
+1.枚举类
+ GenderEnum.java
+
+ 2 配置文件扫描枚举包
+ mybatis-plus.type-enums-package: com.yzm.common_enum.enu
+
+ 3.枚举字段
+@TableField("gender")
+private GenderEnum gender;

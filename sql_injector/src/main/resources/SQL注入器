@@ -1,0 +1,8 @@
+1.接口MyBaseMapper，
+在接口定义通用方法deleteToday()
+需要使用deleteToday()的，继承MyBaseMapper即可，如UserMapper extends MyBaseMapper<User>
+
+2. 创建MyDeleteToday extends AbstractMethod，
+实现自定义SQL语句
+
+3. 通过MyDeleteTodayInjector注册到容器中

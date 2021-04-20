@@ -1,0 +1,9 @@
+1.实体类User加上注解
+@KeySequence("myKeyGenerator")
+
+2.主键字段修改
+@TableId(value = "id", type = IdType.INPUT)
+private Long id;
+
+3.主键生成策略
+MyKeyGenerator.java

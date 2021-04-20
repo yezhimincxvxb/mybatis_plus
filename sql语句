@@ -1,0 +1,91 @@
+CREATE TABLE `user` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `username` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '用户名',
+  `real_name` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT '' COMMENT '真实姓名',
+  `password` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '登录密码',
+  `gender` varchar(1) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT '1' COMMENT '性别[0-女，1-男]',
+  `remark` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT '' COMMENT '备注',
+  `state` tinyint(1) DEFAULT '1' COMMENT '状态[0-冻结，1-正常]',
+  `deleted` tinyint(1) DEFAULT '0' COMMENT '删除状态[0-未删除，1-已删除]',
+  `update_date` datetime DEFAULT NULL COMMENT '更新时间',
+  `create_date` datetime DEFAULT NULL COMMENT '创建时间',
+  `create_date_unix` varchar(50) DEFAULT '' COMMENT '创建时间戳',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户信息表';
+
+insert into user values
+(1,"佟湘玉","闫妮","tongxiangyu",0,"同福客栈掌柜、龙门镖局大小姐、衡山派掌门的遗孀",1,0,now(),now(),unix_timestamp()),
+(2,"白展堂","沙溢","baizhantang",1,"本名白玉汤，跑堂、隐退的盗圣",1,0,now(),now(),unix_timestamp()),
+(3,"莫小贝","王莎莎","moxiaobei",0,"佟湘玉的小姑子、衡山掌门的妹妹、五岳盟主",1,0,now(),now(),unix_timestamp()),
+(4,"吕轻侯","喻恩泰","lvqinghou",1,"账房、前朝吕知府的孙子、关中大侠，爱称吕秀才",1,0,now(),now(),unix_timestamp()),
+(5,"郭芙蓉","姚晨","guofurong",0,"打杂、郭巨侠之女",1,0,now(),now(),unix_timestamp()),
+(6,"李秀莲","姜超","lixiulian",1,"诨名李大嘴，厨子、七侠镇娄知县的内侄",1,0,now(),now(),unix_timestamp()),
+(7,"邢育森(老邢)","范明","laoxing",1,"七侠镇捕头、十八里铺捕头",1,0,now(),now(),unix_timestamp());
+================================================================================================================
+CREATE TABLE `goods` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `name` varchar(20) NOT NULL DEFAULT '' COMMENT '商品名',
+  `price` decimal(10,2) DEFAULT NULL COMMENT '商品价格',
+  `left_num` int DEFAULT '0' COMMENT '库存',
+  `version` int DEFAULT '0' COMMENT '版本',
+  `update_date` datetime DEFAULT NULL COMMENT '更新时间',
+  `create_date` datetime DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='商品表';
+===============================================================================================================
+CREATE TABLE `account` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL COMMENT 'user表的id',
+  `username` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '账户名',
+  `pay_password` varchar(20) DEFAULT NULL COMMENT '支付密码',
+  `total_money` double(20,2) DEFAULT NULL COMMENT '总资金',
+  `available_money` double(20,2) DEFAULT NULL COMMENT '可用资金',
+  `frozen_money` double(20,2) DEFAULT NULL COMMENT '冻结资金',
+  `version` int(11) DEFAULT '0' COMMENT '版本号',
+  `create_date` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_date` datetime DEFAULT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='账号资金表';
+
+CREATE DEFINER=`root`@`localhost` TRIGGER `money_change` BEFORE UPDATE ON `account` FOR EACH ROW BEGIN
+	 SET new.total_money = (new.available_money + new.frozen_money);
+END;
+
+insert into account values
+(1,1,"佟湘玉","tongxiangyu",100000,0,100000,0,now(),now()),
+(2,2,"白展堂","baizhantang",6000,0,6000,0,now(),now()),
+(3,3,"莫小贝","moxiaobei",0,0,500,0,now(),now()),
+(4,4,"吕轻侯","lvqinghou",9000,0,9000,0,now(),now()),
+(5,5,"郭芙蓉","guofurong",2000,0,2000,0,now(),now()),
+(6,6,"李秀莲","lixiulian",4000,0,4000,0,now(),now()),
+(7,7,"邢育森","laoxing",0,0,8000,0,now(),now());
+===============================================================================================================
+CREATE TABLE `movie` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '电影名',
+  `director` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '导演',
+  `score` double(2,1) DEFAULT 0.0 COMMENT '评分',
+  `show_date` varchar(20) DEFAULT '' COMMENT '上映时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='出演电影表';
+
+insert into movie values
+(1,"武林外传","尚敬",9.0,"2006"),
+(2,"捉妖记","许诚毅",5.2,"2015"),
+(3,"北风那个吹","安建",7.2,"2008"),
+(4,"王的盛宴","陆川",8.4,"2012"),
+(5,"送我上青云","滕丛丛",8.0,"2019"),
+(6,"大秦帝国之纵横","丁黑",6.8,"2013"),
+(7,"余生请多指教","易术",7.1,"2018"),
+(8,"小兵张嗄","徐光耀",9.1,"2004"),
+(9,"炊事班的故事","尚敬",8.2,"2002");
+
+CREATE TABLE `user_movie` (
+  `user_id` int(11) NOT NULL COMMENT 'user表的id',
+  `movie_id` int(11) NOT NULL COMMENT 'movie表的id'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='演员电影表';
+
+insert into user_movie values
+(1,1),(2,1),(3,1),(4,1),(5,1),(6,1),(7,1),(1,2),
+(1,3),(2,4),(5,5),(4,6),(4,7),(3,8),(2,9),(6,9),(7,9);
+===============================================================================================================
